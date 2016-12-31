@@ -31,7 +31,7 @@ type SingleLineComment struct {
 	// Body is the rest of the line.
 	Body string
 
-	// PostBody is whitspace after the `// comment body`, including the
+	// PostBody is whitespace after the `// comment body`, including the
 	// newline.
 	PostBody *Whitespace
 }
