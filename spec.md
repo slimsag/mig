@@ -7,7 +7,8 @@
 - [ ] [Constants](#constants)
 - [ ] [Variables](#variables)
 - [ ] [Functions](#functions)
-- [ ] [Line Endings](#line-endings)
+- [x] [Whitespace](#whitespace)
+- [x] [Line Endings](#line-endings)
 
 ## Code Files
 
@@ -129,6 +130,10 @@ func split(a string, b int64) (firstHalf, secondHalf string) {
   // ...
 }
 ```
+
+# Whitespace
+
+Whitespace is any sequence of tabs (`\t`), spaces (` `), line feeds (`\n`) or carriage returns (`\r`).
 
 # Line Endings
 
