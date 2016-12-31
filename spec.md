@@ -1,13 +1,13 @@
 # Mig Programming Language Specification
 
-- [Code Files](#code-files)
-- [Comments](#comments)
-  - [Single-Line Comments](#single-line-comments)
-  - [Multi-Line Comments](#multi-line-comments)
-- [Constants](#constants)
-- [Variables](#variables)
-- [Functions](#functions)
-- [Line Endings](#line-endings)
+- [x] [Code Files](#code-files)
+- [ ] [Comments](#comments)
+  - [x] [Single-Line Comments](#single-line-comments)
+  - [ ] [Multi-Line Comments](#multi-line-comments)
+- [ ] [Constants](#constants)
+- [ ] [Variables](#variables)
+- [ ] [Functions](#functions)
+- [ ] [Line Endings](#line-endings)
 
 ## Code Files
 
