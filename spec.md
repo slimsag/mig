@@ -1,9 +1,9 @@
 # Mig Programming Language Specification
 
 - [x] [Code Files](#code-files)
-- [ ] [Comments](#comments)
+- [x] [Comments](#comments)
   - [x] [Single-Line Comments](#single-line-comments)
-  - [ ] [Multi-Line Comments](#multi-line-comments)
+  - [x] [Multi-Line Comments](#multi-line-comments)
 - [ ] [Constants](#constants)
 - [ ] [Variables](#variables)
 - [ ] [Functions](#functions)
@@ -11,8 +11,8 @@
 
 ## Code Files
 
-Mig code files use the extension `.mg`, and the file path under `src` determines
-the namespace of the code. For example:
+Mig code files use the extension `.mg`, and the file path under `src`
+determines the namespace of the code. For example:
 
 ```
 mycode/src/people/john.mg
@@ -61,8 +61,8 @@ write a comment that spans across multiple lines. For example:
 */
 ```
 
-Both the beginning `/*` and ending `*/` must be _on their own line_ with _no
-other text except whitespace_. They may be nested, for example:
+A multi-line comment begins when `/*` is encountered and ends when `*/` is
+encountered. They may be nested, for example:
 
 ```
 /*
@@ -132,4 +132,6 @@ func split(a string, b int64) (firstHalf, secondHalf string) {
 
 # Line Endings
 
-Mig considers line feeds (`\n`), carriage returns (`\r`), and CRLF (`\r\n`) to be the end of a line. This enables it to work with code written in all standard Unix, Windows, etc text editors.
+Mig considers line feeds (`\n`), carriage returns (`\r`), and CRLF (`\r\n`) to
+be the end of a line. This enables it to work with code written in all standard
+Unix, Windows, etc text editors.
