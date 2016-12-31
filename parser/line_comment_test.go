@@ -16,6 +16,11 @@ func TestParseLineComments(t *testing.T) {
 		Want []ast.Node
 	}{
 		{
+			Name: "empty",
+			Code: "//",
+			Want: []ast.Node{&ast.SingleLineComment{}},
+		},
+		{
 			Name: "no_space",
 			Code: "//foobar",
 			Want: []ast.Node{&ast.SingleLineComment{Body: "foobar"}},
