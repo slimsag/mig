@@ -1,0 +1,2 @@
+# mig
+mig programming language
