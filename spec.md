@@ -7,6 +7,7 @@
 - [Constants](#constants)
 - [Variables](#variables)
 - [Functions](#functions)
+- [Line Endings](#line-endings)
 
 ## Code Files
 
@@ -45,6 +46,8 @@ A single-line comment can be written in the code using `//`. For example:
 ```
 // # This is a comment!
 ```
+
+The comment begins when `//` is encountered, and ends when the [line ends](#line-endings).
 
 ### Multi-Line Comments
 
@@ -126,3 +129,7 @@ func split(a string, b int64) (firstHalf, secondHalf string) {
   // ...
 }
 ```
+
+# Line Endings
+
+Mig considers line feeds (`\n`), carriage returns (`\r`), and CRLF (`\r\n`) to be the end of a line. This enables it to work with code written in all standard Unix, Windows, etc text editors.
