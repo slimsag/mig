@@ -116,6 +116,7 @@ func TestParseLineComments(t *testing.T) {
 				},
 			},
 		},
+		// TODO(slimsag): test preceding + proceeding newlines
 	}
 
 	for _, test := range tests {

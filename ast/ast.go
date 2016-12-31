@@ -37,7 +37,24 @@ type SingleLineComment struct {
 }
 
 func (s *SingleLineComment) String() string {
-	return fmt.Sprintf("SingleLineComment{PreOpen:%+v PostOpen:%+v Body:%+v PostBody: %+v}", s.PreOpen, s.PostOpen, s.Body, s.PostBody)
+	return fmt.Sprintf("SingleLineComment{PreOpen:%+v PostOpen:%+v Body:%q PostBody: %+v}", s.PreOpen, s.PostOpen, s.Body, s.PostBody)
+}
+
+// MultiLineComment represents a multi-line comment.
+type MultiLineComment struct {
+	// PreOpen is indention before the opening `/*`.
+	PreOpen *Whitespace
+
+	// Body is the contents of the comment.
+	Body string
+
+	// PostBody is whitespace after the closing `*/`, including the
+	// newline.
+	PostBody *Whitespace
+}
+
+func (s *MultiLineComment) String() string {
+	return fmt.Sprintf("MultiLineComment{PreOpen:%+v Body:%q PostBody: %+v}", s.PreOpen, s.Body, s.PostBody)
 }
 
 // Whitespace is one or more spaces, tabs, newlines or carriage returns in any

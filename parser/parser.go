@@ -10,6 +10,7 @@ const (
 	ZeroErrorCode ErrorCode = iota
 	ExpectedFileBody
 	ExpectedSingleLineComment
+	ExpectedMultiLineComment
 )
 
 type ErrorCode int
@@ -20,6 +21,8 @@ func (e ErrorCode) String() string {
 		return "expected file body"
 	case ExpectedSingleLineComment:
 		return "expected single line comment"
+	case ExpectedMultiLineComment:
+		return "expected multi-line comment"
 	}
 	panic("invalid error code")
 }
@@ -119,11 +122,20 @@ func (p *parser) parseFile(name string, body []byte) (*ast.File, error) {
 	}
 	for {
 		// Module bodies may contain single line comments.
-		comment, err := p.parseSingleLineComment()
+		singleLineComment, err := p.parseSingleLineComment()
 		if err != nil && err.Code != ExpectedSingleLineComment {
 			return nil, err
 		} else if err == nil {
-			p.emit(comment)
+			p.emit(singleLineComment)
+			continue
+		}
+
+		// Module bodies may contain multi-line comments.
+		multiLineComment, err := p.parseMultiLineComment()
+		if err != nil && err.Code != ExpectedMultiLineComment {
+			return nil, err
+		} else if err == nil {
+			p.emit(multiLineComment)
 			continue
 		}
 
@@ -159,6 +171,28 @@ func (p *parser) parseNewline() (*ast.Whitespace, *Error) {
 		return nil, nil
 	}
 	return &ast.Whitespace{Body: string(any)}, nil
+}
+
+func (p *parser) parseSpaceAndNewline() (*ast.Whitespace, *Error) {
+	space, err := p.parseSpacesOrTabs()
+	if err != nil {
+		return nil, err
+	}
+	newLine, err := p.parseNewline()
+	if err != nil {
+		return nil, err
+	}
+	if space == nil && newLine == nil {
+		return nil, nil
+	}
+	w := &ast.Whitespace{}
+	if space != nil {
+		w.Body += space.Body
+	}
+	if newLine != nil {
+		w.Body += newLine.Body
+	}
+	return w, nil
 }
 
 // parseAny tries to parse any of the characters in set, aborting if any

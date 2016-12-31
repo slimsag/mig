@@ -6,10 +6,9 @@ import (
 	"github.com/slimsag/mig/ast"
 )
 
-// parseSingleLineComment first parses preceding whitespace, then a comment
-// string.
-func (p *parser) parseSingleLineComment() (c *ast.SingleLineComment, err *Error) {
-	c = &ast.SingleLineComment{}
+// parseMultiLineComment parses a multi-line comment.
+func (p *parser) parseMultiLineComment() (c *ast.MultiLineComment, err *Error) {
+	c = &ast.MultiLineComment{}
 
 	// Parse pre-open spaces or tabs.
 	c.PreOpen, err = p.parseSpacesOrTabs()
@@ -24,44 +23,46 @@ func (p *parser) parseSingleLineComment() (c *ast.SingleLineComment, err *Error)
 		if c.PreOpen != nil {
 			p.unreadBytes(len(c.PreOpen.Body))
 		}
-		return nil, p.error(ExpectedSingleLineComment)
+		return nil, p.error(ExpectedMultiLineComment)
 	} else if ioErr != nil {
 		return nil, p.ioError(ioErr)
 	}
-	if string(b) != "//" {
+	if string(b) != "/*" {
 		if c.PreOpen != nil {
 			p.unreadBytes(len(c.PreOpen.Body))
 		}
 		p.unreadBytes(2)
-		return nil, p.error(ExpectedSingleLineComment)
-	}
-
-	// Parse post-open whitespace.
-	c.PostOpen, err = p.parseSpacesOrTabs()
-	if err != nil {
-		return nil, err
+		return nil, p.error(ExpectedMultiLineComment)
 	}
 
 	// Consume comment body.
 	var body []byte
 	for {
-		// Attempt parsing whitespace + a newline.
-		c.PostBody, err = p.parseSpaceAndNewline()
-		if err != nil {
-			return nil, err
-		}
-		if c.PostBody != nil {
-			break
-		}
-
 		b, ioErr := p.readByte()
 		if ioErr == io.EOF {
 			break
 		} else if ioErr != nil {
 			return nil, p.ioError(ioErr)
 		}
+		if b == '*' {
+			b2, ioErr := p.next(1)
+			if ioErr == io.EOF {
+				return nil, p.error(ExpectedMultiLineComment)
+			} else if ioErr != nil {
+				return nil, p.ioError(ioErr)
+			}
+			if b2[0] == '/' {
+				break
+			}
+		}
 		body = append(body, b)
 	}
 	c.Body = string(body)
+
+	// Parse post-body whitespace.
+	c.PostBody, err = p.parseSpaceAndNewline()
+	if err != nil {
+		return nil, err
+	}
 	return c, nil
 }
