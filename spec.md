@@ -34,7 +34,7 @@ namespace of the code.
 Mig supports two kinds of code comments, single-line comments and multi-line
 comments.
 
-Comments are in the [CommonMark](http://spec.commonmark.org/0.22/) format and
+Comments are in the [CommonMark](http://spec.commonmark.org) format and
 thus can be automatically turned into rich HTML documentation for viewing in
 the web.
 
